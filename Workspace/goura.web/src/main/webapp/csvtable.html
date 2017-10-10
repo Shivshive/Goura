@@ -1,0 +1,91 @@
+<!doctype html>
+<html ng-app="App" ng-controller="Controller">
+	<head>
+		<title>Display CSV data in to html table</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.8.3/jquery.csv.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	
+		<script>
+		
+			var CSVData = "name;mfr;type;calories;protein;fat;sodium;fiber;carbo;sugars;potass;vitamins;shelf;weight;cups;rating\n100% Bran;N;C;70;4;1;130;10;5;6;280;25;3;1;0.33;68.402973\n100% Natural Bran;Q;C;120;3;5;15;2;8;8;135;0;3;1;1;33.983679\nAll-Bran;K;C;70;4;1;260;9;7;5;320;25;3;1;0.33;59.425505\nAll-Bran with Extra Fiber;K;C;50;4;0;140;14;8;0;330;25;3;1;0.5;93.704912\nJust Right Fruit & Nut;K;C;140;3;1;170;2;20;9;95;100;3;1.3;0.75;36.471512\nLucky Charms;G;C;110;2;1;180;0;12;12;55;25;2;1;1;26.734515	\nOatmeal Raisin Crisp;G;C;130;3;2;170;1.5;13.5;10;120;25;3;1.25;0.5;30.450843	\nRaisin Nut Bran;G;C;100;3;2;140;2.5;10.5;8;140;25;3;1;0.5;39.703400";
+		
+		</script>
+	
+	</head>
+	
+	<body class="container" style="padding: 0px;margin: 10px;">
+	
+		<h2>{{title}}</h2>
+	
+	
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th>#</th>
+		      <th ng-repeat="c in columns track by $index">{{c.toUpperCase()}}<a href="javascipt:void(0)" ng-click="sort(c, $index)">^</a></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr ng-repeat="r in rows track by $index">
+		    	<th>{{$index + 1}}</th>
+		      <th ng-repeat="c in r track by $index">{{c}}</th>
+		    </tr>
+		  </tbody>
+		</table>
+	
+	
+		<script>
+		
+		var App = angular.module("App", []);
+		
+		var Controller = App.controller("Controller", ["$scope", "$http", "$sce", function($scope, $http, $sce){
+			
+			$scope.title = "Display CSV data to HTML table"
+			
+			var url = "https://perso.telecom-paristech.fr/eagan/class/igr204/data/cereal.csv";
+			
+			loadCSVData(url);
+			
+			function loadCSVData(url){
+				$scope.data = $.csv.toArrays(CSVData, {delimiter : ';', separator: ';'});
+				console.log($scope.data);
+				$scope.columns = $scope.data.splice(0, 1)[0];
+				$scope.rows = $scope.data;
+			}
+			
+			$scope.sort = function(c, index){
+				
+				var newRows = [];
+				
+				$scope.rows.sort(sortFunction);
+
+				function sortFunction(a, b) {
+				    if (a[index] === b[index]) {
+				        return 0;
+				    }
+				    else {
+				    	
+				    	if(isNaN(a[index])){
+				    		return (a[index] < b[index]) ? -1 : 1;
+				    	}
+				    	else{
+				    		return (a[index] - b[index]);
+				    		}
+				    	
+				        
+				    }
+				}
+				
+			}
+			
+		}]);
+		
+		</script>
+	</body>
+</html>

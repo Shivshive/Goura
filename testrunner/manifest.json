@@ -1,0 +1,9 @@
+{
+  "name": "com.goura.testrunner",
+  "description": "Goura Test Runner",
+  "path": "testrunner-1.exe",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://knldjmfmopnpolahpmmgbagdohdnhkik/"
+  ]
+}

@@ -1,0 +1,1 @@
+var MainApp = angular.module("MainApp", ['ui.bootstrap','angular-growl']); 

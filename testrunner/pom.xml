@@ -1,0 +1,207 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.goura</groupId>
+  <artifactId>testrunner</artifactId>
+  <name>Goura Test Runner</name>
+  <version>1</version>
+  <properties>
+  	<maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+  
+  <dependencies>
+  
+  	<dependency>
+	    <groupId>org.seleniumhq.selenium</groupId>
+	    <artifactId>selenium-server</artifactId>
+	    <version>3.4.0</version>
+	    
+  	</dependency>
+  
+    	
+  	<dependency>
+		<groupId>io.github.bonigarcia</groupId>
+		<artifactId>webdrivermanager</artifactId>
+		<version>1.6.2</version>
+	</dependency>
+  	
+  
+  </dependencies>
+    
+    
+    <build>
+	  <plugins>
+	  
+	  <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.6.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+	  
+<!-- 	    <plugin> -->
+<!-- 	      <artifactId>maven-assembly-plugin</artifactId> -->
+<!-- 	      <configuration> -->
+<!-- 	        <archive> -->
+<!-- 	          <manifest> -->
+<!-- 	            <mainClass>com.goura.testrunner.App</mainClass> -->
+<!-- 	          </manifest> -->
+<!-- 	        </archive> -->
+<!-- 	        <descriptorRefs> -->
+<!-- 	          <descriptorRef>jar-with-dependencies</descriptorRef> -->
+<!-- 	        </descriptorRefs> -->
+<!-- 	      </configuration> -->
+<!-- 	       <executions> -->
+<!-- 		    <execution> -->
+<!-- 		      <id>make-assembly</id> this is used for inheritance merges -->
+<!-- 		      <phase>package</phase> bind to the packaging phase -->
+<!-- 		      <goals> -->
+<!-- 		        <goal>single</goal> -->
+<!-- 		      </goals> -->
+<!-- 		    </execution> -->
+<!-- 		  </executions> -->
+<!-- 	    </plugin> -->
+
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-antrun-plugin</artifactId>
+			    <version>1.8</version>
+			    <executions>
+			        <execution>
+			            <phase>prepare-package</phase>
+			            <goals>
+			                <goal>run</goal>
+			            </goals>
+			            <configuration>
+			                <tasks>
+			                    <echo>Using env.test.properties</echo>
+			                    <copy file="manifest.json" tofile="${basedir}/target/manifest.json"/>
+			                    <copy file="hub.json" tofile="${basedir}/target/hub.json"/>
+			                    <copy file="node.json" tofile="${basedir}/target/node.json"/>
+			                    <copy file="standalone.json" tofile="${basedir}/target/standalone.json"/>
+			                    <copy file="icon.ico" tofile="${basedir}/target/icon.ico"/>
+			                </tasks>
+			              </configuration>
+			            </execution>
+			        </executions>
+			    </plugin>
+
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-dependency-plugin</artifactId>
+			    <executions>
+			        <execution>
+			            <id>copy-dependencies</id>
+			            <phase>prepare-package</phase>
+			            <goals>
+			                <goal>copy-dependencies</goal>
+			            </goals>
+			            <configuration>
+			                <outputDirectory>${project.build.directory}/classes/lib</outputDirectory>
+			                <overWriteReleases>false</overWriteReleases>
+			                <overWriteSnapshots>false</overWriteSnapshots>
+			                <overWriteIfNewer>true</overWriteIfNewer>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-jar-plugin</artifactId>
+			    <configuration>
+			        <archive>
+			            <manifest>
+			                <addClasspath>true</addClasspath>
+			                <classpathPrefix>lib/</classpathPrefix>
+			                <mainClass>com.goura.testrunner.App</mainClass>
+			            </manifest>
+			        </archive>
+			    </configuration>
+			</plugin>
+
+
+ 			<plugin><!--groupId>org.dstovall</groupId-->
+	            <groupId>com.jolira</groupId>
+	            <artifactId>onejar-maven-plugin</artifactId>
+	            <version>1.4.4</version>
+	            <executions>
+	              <execution>
+	                <phase>package</phase>
+	                <configuration>
+	                  <mainClass>com.goura.testrunner.App</mainClass>
+	                  <attachToBuild>true</attachToBuild>
+	                  <!-- https://code.google.com/p/onejar-maven-plugin/issues/detail?id=8 -->
+	                  <!--classifier>onejar</classifier-->
+	                  <filename>${project.build.finalName}-onejar.${project.packaging}</filename>
+	                </configuration>
+	                <goals>
+	                  <goal>one-jar</goal>
+	                </goals>
+	              </execution>
+	            </executions>
+	          </plugin>
+
+
+			<!-- LAUNCH4J -->
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>l4j-clui</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>launch4j</goal>
+                        </goals>
+                        <configuration>
+                            <headerType>console</headerType>
+                            <jar>${project.build.directory}/${project.build.finalName}-onejar.${project.packaging}</jar>
+                            <outfile>${project.build.directory}/${project.build.finalName}.exe</outfile>
+                            <errTitle></errTitle>
+							<cmdLine></cmdLine>
+							<chdir>.</chdir>
+							<priority>normal</priority>
+                            <downloadUrl>http://java.com/download</downloadUrl>     
+                              <stayAlive>false</stayAlive>
+							  <restartOnCrash>false</restartOnCrash>
+							  <manifest></manifest>
+							  <icon>${project.build.directory}/icon.ico</icon>
+							    <singleInstance>
+								    <mutexName>NodeStarter</mutexName>
+								    <windowTitle>Node Starter</windowTitle>
+								  </singleInstance>                   
+								  <jre>
+								    <path></path>
+								    <bundledJre64Bit>false</bundledJre64Bit>
+								    <bundledJreAsFallback>false</bundledJreAsFallback>
+								    <minVersion>1.7.0</minVersion>
+								    <maxVersion></maxVersion>
+								    <jdkPreference>preferJre</jdkPreference>
+								    <runtimeBits>64/32</runtimeBits>
+								  </jre>
+                            <versionInfo>
+                                <fileVersion>1.0.0.0</fileVersion>
+                                <txtFileVersion>${project.version}</txtFileVersion>
+                                <fileDescription>${project.name}</fileDescription>
+                                <copyright>C</copyright>
+                                <productVersion>1.0.0.0</productVersion>
+                                <txtProductVersion>1.0.0.0</txtProductVersion>
+                                <productName>${project.name}</productName>
+                                <internalName>TestRunner</internalName>
+                                <originalFilename>${project.build.finalName}.exe</originalFilename>
+                            </versionInfo>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+	  </plugins>
+	</build>
+  
+
+  	
+  
+</project>

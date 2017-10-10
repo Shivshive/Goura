@@ -1,0 +1,19 @@
+<div class="join-newsletter block">	
+	<h2 class="modal-title titular large" id="modal-title">Hub Console</h2>
+	
+	<div class="input-container">
+	<div>
+		<button ng-click="startNode();" class="subscribe button">Start Node</button>
+		<button ng-click="stopNode();" class="subscribe button">Stop Node</button>
+	</div>
+	<div>
+	<textarea ng-model="consoleOutput" style="height:200px;width:100%;" readonly></textarea>
+	</div>
+<!-- 	 	<iframe src="http://localhost:4444/grid/console" style="width: 100%;height: 500px;"></iframe> -->
+	 	<input type="text" ng-model="command"><button ng-click="send();" class="subscribe button">Send</button>
+        <div style="text-align: center;">
+        	<a class="sign-in button" href="javascript:void(0)" ng-click="cancel()">Cancel</a>
+        </div>
+	</div>
+</div>
+

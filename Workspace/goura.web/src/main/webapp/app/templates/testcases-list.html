@@ -1,0 +1,23 @@
+<div class="join-newsletter block">
+	
+	<h2 class="modal-title titular large" id="modal-title">Test Cases</h2>
+	
+	<div class="input-container">
+	  <div class="modal-body test-case-list" id="modal-body">
+            <ul>
+            
+            	<li ng-hide="list" style="text-align: center;">
+            		<img src="app/images/loading.gif"  style="height: 250px;border-radius: 125px;">
+            	</li>
+            
+                <li ng-repeat="item in list">
+                    <a href="javascript:void(0)"  ng-click="$event.preventDefault();ok(item)"><span class="text">{{ item }}</span></a>
+                </li>
+            </ul>
+        </div>
+        <div style="text-align: center;">
+        	<a class="sign-in button" href="javascript:void(0)" ng-click="cancel()">Cancel</a>
+        </div>
+	</div>
+</div>
+

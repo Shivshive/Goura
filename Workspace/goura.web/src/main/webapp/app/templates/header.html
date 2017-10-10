@@ -1,0 +1,97 @@
+			<ul class="header-menu horizontal-list">
+				 <li>
+                	<a ng-click="stepFlowChart();" class="header-menu-tab" href="javascript:void(0)"><span class="icon entypo-menu scnd-font-color"></span>Menu</a>
+                </li>
+				<li>
+                	<a  tooltip-is-open="false"
+	                	uib-tooltip="New" 
+	                	tooltip-append-to-body="true" 
+	                	tooltip-placement="bottom" 
+	                	tooltip-class = "header-menu-tooltip"
+	                	ng-click="newFlowChart()" class="header-menu-tab inblock-action" href="javascript:void(0)"><span class="icon entypo-plus scnd-font-color"></span></a>
+	            </li>
+                <li>
+                	<input type="file" id="uploadChart" name="uploadChart" style="display:none;">
+                	<a 
+                		tooltip-is-open="false"
+	                	uib-tooltip="Upload" 
+	                	tooltip-append-to-body="true" 
+	                	tooltip-placement="bottom" 
+	                	tooltip-class = "header-menu-tooltip"
+                		ng-click="loadFlowChart();" class="header-menu-tab inblock-action" href="javascript:void(0)"><span class="icon entypo-upload scnd-font-color"></span></a>
+                	
+                	<a 
+                		tooltip-is-open="false"
+	                	uib-tooltip="View List" 
+	                	tooltip-append-to-body="true" 
+	                	tooltip-placement="bottom" 
+	                	tooltip-class = "header-menu-tooltip"
+                		ng-click="viewTestCases();" class="header-menu-tab inblock-action" href="javascript:void(0)"><span class="icon entypo-list scnd-font-color"></span></a>
+                </li>
+                <li>
+                	<a
+                		tooltip-is-open="false"
+	                	uib-tooltip="Save" 
+	                	tooltip-append-to-body="true" 
+	                	tooltip-placement="bottom" 
+	                	tooltip-class = "header-menu-tooltip" 
+                	
+                	ng-click="saveFlowChart();" class="header-menu-tab inblock-action" href="javascript:void(0)"><span class="icon entypo-download scnd-font-color"></span></a>
+                </li>
+                <li>
+                	<a 
+                		tooltip-is-open="false"
+	                	uib-tooltip="Run" 
+	                	tooltip-append-to-body="true" 
+	                	tooltip-placement="bottom" 
+	                	tooltip-class = "header-menu-tooltip" 
+                	ng-click="runFlowChart();" class="header-menu-tab inblock-action" href="javascript:void(0)"><span class="icon entypo-flash scnd-font-color"></span></a>
+                </li>
+                 <li style="float: right;">
+                	<a 
+                	tooltip-is-open="false"
+	                	uib-tooltip="View Hub Console" 
+	                	tooltip-append-to-body="true" 
+	                	tooltip-placement="bottom" 
+	                	tooltip-class = "header-menu-tooltip" 
+                		ng-dblClick="openConsole()"
+                	class="header-menu-tab inblock-action" href="javascript:void(0)">
+                	<span 
+                	class="icon scnd-font-color"
+                	ng-class="{'hub-started entypo-network' : $root.hubStarted,
+                			'hub-stopped entypo-network' : !$root.hubStarted}"
+                	></span>
+                	</a>
+                </li>
+                <li style="float: right;">
+                	<a 
+                	tooltip-is-open="false"
+	                	uib-tooltip="{{$root.hubStarted ? 'Hub is UP!' : 'Hub is DOWN!'}}" 
+	                	tooltip-append-to-body="true" 
+	                	tooltip-placement="bottom" 
+	                	tooltip-class = "header-menu-tooltip" 
+                	ng-click="startStopHub()"
+                	class="header-menu-tab inblock-action" href="javascript:void(0)">
+                	<span 
+                	class="icon scnd-font-color"
+                	ng-class="{'hub-stopped entypo-stop' : $root.hubStarted,
+                			'hub-started entypo-light-up' : !$root.hubStarted}"
+                	></span>
+                	</a>
+                </li>
+                 <li style="float: right;">
+                	<a 
+                	tooltip-is-open="false"
+	                	uib-tooltip="{{$root.hubStarted ? 'Hub is UP!' : 'Hub is DOWN!'}}" 
+	                	tooltip-append-to-body="true" 
+	                	tooltip-placement="bottom" 
+	                	tooltip-class = "header-menu-tooltip" 
+                	ng-click="startNode()"
+                	class="header-menu-tab inblock-action" href="javascript:void(0)">
+                	<span 
+                	class="icon scnd-font-color"
+                	ng-class="entypo-leaf"
+                	></span>
+                	</a>
+                </li>
+			</ul>		

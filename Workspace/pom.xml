@@ -19,6 +19,7 @@
   
   <modules>
 		<module>goura.web</module>
+		<module>goura.web/server-standalone</module>
   </modules>
   
 </project>

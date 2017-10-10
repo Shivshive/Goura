@@ -1,0 +1,5 @@
+<appenders>
+    <File name="HubLogger" fileName="${sys:logFilename}">
+        <PatternLayout pattern="%-4r %d{${datestamp}} [%t] %-5level %logger{36} - %msg%n"/>
+    </File>
+</appenders>
